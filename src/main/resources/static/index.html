@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atlas Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="bg-shape bg-shape-1" aria-hidden="true"></div>
+  <div class="bg-shape bg-shape-2" aria-hidden="true"></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <header class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">Atlas Console</p>
+      <h1>Deployments Command Deck</h1>
+      <p class="sub">Create, update, and orchestrate application deployments with a clean, focused control surface.</p>
+      <div class="hero-actions">
+        <button class="btn primary" id="refresh-all">Refresh All</button>
+        <button class="btn ghost" id="deploy-all">Deploy All</button>
+      </div>
+      <div class="status" id="status-text">Ready.</div>
+    </div>
+    <div class="hero-panel">
+      <div class="hero-metric">
+        <span class="label">Applications</span>
+        <span class="value" id="count-apps">0</span>
+      </div>
+      <div class="hero-metric">
+        <span class="label">Deployments</span>
+        <span class="value" id="count-deployments">0</span>
+      </div>
+      <div class="hero-metric">
+        <span class="label">Active</span>
+        <span class="value" id="count-active">0</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <h2>Applications</h2>
+          <p>Manage application definitions and deployment settings.</p>
+        </div>
+      </div>
+      <div class="panel-grid">
+        <div class="card form-card">
+          <div class="card-header">
+            <h3 id="form-title">Create Application</h3>
+            <button class="btn link" id="reset-form" type="button">Reset</button>
+          </div>
+          <form id="app-form" autocomplete="off">
+            <div class="field">
+              <label for="app-name">Name</label>
+              <input id="app-name" name="name" placeholder="orders-api" required>
+            </div>
+            <div class="field">
+              <label for="app-image">Image</label>
+              <input id="app-image" name="image" placeholder="registry.io/orders:latest" required>
+            </div>
+            <div class="field-group">
+              <div class="field">
+                <label for="app-replicas">Desired Replicas</label>
+                <input id="app-replicas" name="desiredReplicas" type="number" min="0" placeholder="1">
+              </div>
+              <div class="field">
+                <label for="app-port">Container Port</label>
+                <input id="app-port" name="containerPort" type="number" min="1" placeholder="8080">
+              </div>
+            </div>
+            <div class="field">
+              <label for="app-env">Env JSON</label>
+              <textarea id="app-env" name="env" rows="3" placeholder='{"NODE_ENV":"production"}'></textarea>
+            </div>
+            <div class="field-group">
+              <div class="field">
+                <label for="app-cpu">CPU Request</label>
+                <input id="app-cpu" name="resources_cpu" placeholder="250m">
+              </div>
+              <div class="field">
+                <label for="app-ram">RAM Limit</label>
+                <input id="app-ram" name="resources_ram" placeholder="512Mi">
+              </div>
+            </div>
+            <div class="field inline">
+              <input id="app-service" name="serviceEnabled" type="checkbox">
+              <label for="app-service">Enable service on deploy</label>
+            </div>
+            <button class="btn primary" id="submit-app" type="submit">Create Application</button>
+          </form>
+        </div>
+        <div class="card list-card">
+          <div class="card-header">
+            <h3>Application Catalog</h3>
+            <button class="btn ghost" id="refresh-apps" type="button">Refresh</button>
+          </div>
+          <div id="app-list" class="list"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <h2>Deployments</h2>
+          <p>Monitor cluster state, update replicas, and expose services.</p>
+        </div>
+        <div class="panel-actions">
+          <button class="btn ghost" id="refresh-deployments" type="button">Refresh Deployments</button>
+          <button class="btn ghost" id="refresh-active" type="button">Refresh Active</button>
+        </div>
+      </div>
+      <div class="panel-grid deployments-grid">
+        <div class="card list-card">
+          <div class="card-header">
+            <h3>All Deployments</h3>
+            <span class="chip">/api/deployment</span>
+          </div>
+          <div id="deployment-list" class="list"></div>
+        </div>
+        <div class="card list-card">
+          <div class="card-header">
+            <h3>Active Deployments</h3>
+            <span class="chip">/api/deployment/active</span>
+          </div>
+          <div id="active-list" class="list"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast-root" class="toast-root" aria-live="polite"></div>
+
+  <footer class="footer">
+    <span>Atlas Deck</span>
+    <span>Powered by Spring Boot</span>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>

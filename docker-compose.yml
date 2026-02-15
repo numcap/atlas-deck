@@ -1,0 +1,10 @@
+services:
+  postgres:
+    container_name: consoleDB
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: jonathan
+      POSTGRES_USER: postgres
+      POSTGRES_DB: consoleDB
+    ports:
+      - "5432:5432"

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: console-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: console-app
+  template:
+    metadata:
+      labels:
+        app: console-app
+    spec:
+      serviceAccountName: console-sa
+      containers:
+        - name: console
+          image: console:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+        - name: postgresdb
+          image: postgres:16
+          env: 
+            - name: POSTGRES_PASSWORD
+              value: "jonathan"
+            - name: POSTGRES_USER 
+              value: "postgres"
+            - name: POSTGRES_DB
+              value: "consoleDB"
+          ports:
+            - containerPort: 5432
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: default
+spec:
+  selector:
+    app: console-app
+  ports:
+  - port: 80
+    targetPort: 8080
+  type: ClusterIP

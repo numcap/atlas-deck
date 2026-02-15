@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: console
+  datasource:
+    url: jdbc:postgresql://localhost:5432/consoleDB
+    username: postgres
+    password: jonathan
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show_sql: true
