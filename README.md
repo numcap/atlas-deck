@@ -18,6 +18,7 @@ This app is a specialized management console for orchestrating containerized app
 ## Deployment
 The application is containerized using a multi-stage Dockerfile and deployed via a standard Kubernetes manifest.
 
+*The Dockerfile (console:latest) image should be registered/built inside the cluster*
 ```bash
 # Apply RBAC permissions
 kubectl apply -f rbac.yaml
@@ -26,4 +27,5 @@ kubectl apply -f rbac.yaml
 kubectl apply -f app-deploy.yml
 ```
 
+## Diagram
 ![k8s-demo](https://github.com/user-attachments/assets/3725c867-2875-4c26-802b-0803fe4fb4ca)
