@@ -1,4 +1,4 @@
-# k8s Demo - Kubernetes Command Deck
+# Atlas Deck - Kubernetes Command Deck
 
 This app is a specialized management console for orchestrating containerized applications within a Kubernetes cluster. It provides a bridge between high-level application definitions and low-level K8s resources.
 
