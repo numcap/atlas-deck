@@ -1,3 +1,5 @@
+# Docker compose for testing the database outside k8s cluster
+
 services:
   postgres:
     container_name: consoleDB
